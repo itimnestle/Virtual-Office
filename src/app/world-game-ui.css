@@ -1,0 +1,590 @@
+/*
+ * Game UI kit for everything shown inside an office window (and the 2D lobby).
+ * Pages keep their markup; this layer turns cards into panels, buttons into
+ * chunky pressable keys, fields into slots, lists and tables into row cards,
+ * tabs into segmented switches and <details> into collapsible quest panels.
+ * Colours follow the open place (--place, --place-soft, --place-ink).
+ */
+
+.world-window-body,
+.world-lobby {
+  --g-line: color-mix(in srgb, var(--place, #8e79d8) 16%, #ebe7f5);
+  --g-raise: color-mix(in srgb, var(--place, #8e79d8) 22%, #e2dcf0);
+  --g-slot: color-mix(in srgb, var(--place-soft, #f1edfb) 35%, #f7f6fb);
+  --g-ink: var(--place-ink, var(--text));
+  --g-accent: var(--place, var(--primary));
+}
+:root[data-theme="dark"] .world-window-body {
+  --g-line: color-mix(in srgb, var(--place, #8e79d8) 25%, var(--border));
+  --g-raise: color-mix(in srgb, var(--place, #8e79d8) 30%, #14131a);
+  --g-slot: var(--surface-2);
+  --g-ink: var(--text);
+}
+
+.world-window-body {
+  background:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--g-accent) 9%, transparent) 1px, transparent 0) 0 0 / 18px 18px,
+    linear-gradient(180deg, color-mix(in srgb, var(--place-soft, #f4f1fc) 30%, var(--surface)) 0%, var(--surface) 240px);
+}
+
+/* ---- Page title: a chapter banner ---- */
+.world-window-body h1 {
+  position: relative;
+  padding-bottom: 10px;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.3px;
+  color: var(--g-ink);
+}
+.world-window-body h1::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 46px;
+  height: 5px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--g-accent), color-mix(in srgb, var(--g-accent) 30%, #fff));
+}
+.world-window-body h2,
+.world-window-body h3 {
+  color: var(--g-ink);
+}
+
+/* ---- Panels ---- */
+.world-window-body .ui-card,
+.world-window-body form.rounded-2xl,
+.world-window-body section.rounded-2xl,
+.world-window-body details,
+.world-window-body .viz-tile {
+  border: 2px solid var(--g-line) !important;
+  border-radius: 22px !important;
+  background: linear-gradient(180deg, var(--surface) 0%, color-mix(in srgb, var(--g-slot) 45%, var(--surface)) 100%) !important;
+  box-shadow: 0 4px 0 var(--g-raise), 0 14px 28px -20px rgb(70 55 130 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.9) !important;
+}
+.world-window-body .ui-card > h2:first-child,
+.world-window-body .ui-card > div:first-child > h2:first-child {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 800;
+}
+.world-window-body .ui-card > h2:first-child::before,
+.world-window-body .ui-card > div:first-child > h2:first-child::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 4px;
+  transform: rotate(45deg);
+  background: var(--g-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--g-accent) 22%, transparent);
+}
+
+/* ---- Collapsible quest panels ---- */
+.world-window-body details {
+  padding: 0 !important;
+  overflow: hidden;
+}
+.world-window-body details > summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  list-style: none;
+  cursor: pointer;
+  font-weight: 800;
+  color: var(--g-ink);
+  user-select: none;
+}
+.world-window-body details > summary::-webkit-details-marker {
+  display: none;
+}
+.world-window-body details > summary::before {
+  content: "+";
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--g-accent) 80%, #fff), var(--g-accent));
+  box-shadow: 0 3px 0 color-mix(in srgb, var(--g-accent) 60%, #000);
+  transition: transform 0.2s ease;
+}
+.world-window-body details[open] > summary::before {
+  content: "–";
+  transform: rotate(180deg);
+}
+.world-window-body details[open] > summary {
+  border-bottom: 2px dashed var(--g-line);
+}
+.world-window-body details > :not(summary) {
+  margin: 16px 18px 18px;
+}
+.world-window-body details.relative > summary::before {
+  display: none;
+}
+
+/* ---- Buttons: chunky, pressable ---- */
+.world-window-body .ui-btn,
+.world-lobby .ui-btn {
+  min-height: 44px;
+  padding-inline: 18px;
+  border-radius: 14px;
+  border: 0;
+  font-weight: 800;
+  letter-spacing: 0.1px;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+}
+.world-window-body .ui-btn:not(:disabled):hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04) saturate(1.05);
+  opacity: 1;
+}
+.world-window-body .ui-btn:not(:disabled):active {
+  transform: translateY(3px);
+}
+.world-window-body .ui-btn--primary {
+  color: #fff;
+  text-shadow: 0 1px 0 rgb(0 0 0 / 0.18);
+  background: linear-gradient(180deg, #62d6b1 0%, #2f9d7d 100%);
+  box-shadow: 0 4px 0 #1f7a5f, 0 10px 18px -10px rgb(47 157 125 / 0.7), inset 0 1px 0 rgb(255 255 255 / 0.35);
+}
+.world-window-body .ui-btn--primary:not(:disabled):active {
+  box-shadow: 0 1px 0 #1f7a5f, inset 0 2px 4px rgb(0 0 0 / 0.15);
+}
+.world-window-body .ui-btn--secondary {
+  color: var(--g-ink);
+  background: linear-gradient(180deg, var(--surface), var(--g-slot));
+  border: 2px solid var(--g-line);
+  box-shadow: 0 4px 0 var(--g-raise);
+}
+.world-window-body .ui-btn--secondary:not(:disabled):active {
+  box-shadow: 0 1px 0 var(--g-raise);
+}
+.world-window-body .ui-btn--danger {
+  color: #fff;
+  text-shadow: 0 1px 0 rgb(0 0 0 / 0.2);
+  background: linear-gradient(180deg, #ff8a7a 0%, #e0533d 100%);
+  box-shadow: 0 4px 0 #b23a28, 0 10px 18px -10px rgb(224 83 61 / 0.7), inset 0 1px 0 rgb(255 255 255 / 0.3);
+}
+.world-window-body .ui-btn--danger:not(:disabled):active {
+  box-shadow: 0 1px 0 #b23a28;
+}
+.world-window-body .ui-btn--ghost {
+  color: var(--g-ink);
+  background: transparent;
+}
+.world-window-body .ui-btn--ghost:hover {
+  background: var(--g-slot);
+}
+
+/* ---- Fields: inset slots ---- */
+.world-window-body input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):not([type="range"]):not([type="color"]),
+.world-window-body select,
+.world-window-body textarea {
+  min-height: 44px;
+  border: 2px solid var(--g-line);
+  border-radius: 14px;
+  background-color: var(--g-slot);
+  box-shadow: inset 0 2px 0 rgb(70 55 130 / 0.06);
+  font-size: 14px;
+  color: var(--text);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+.world-window-body input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):not([type="range"]):not([type="color"]):hover,
+.world-window-body select:hover,
+.world-window-body textarea:hover {
+  border-color: color-mix(in srgb, var(--g-accent) 35%, var(--g-line));
+}
+.world-window-body input:focus,
+.world-window-body select:focus,
+.world-window-body textarea:focus {
+  outline: none;
+  border-color: var(--g-accent);
+  background-color: var(--surface);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--g-accent) 20%, transparent);
+}
+.world-window-body select {
+  appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%237a6fa6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+.world-window-body .ui-label,
+.world-window-body label > span:first-child:not(:only-child) {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: var(--g-ink);
+}
+
+/* Checkboxes and radios as game toggles */
+.world-window-body input[type="checkbox"],
+.world-window-body input[type="radio"] {
+  appearance: none;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  border: 2px solid color-mix(in srgb, var(--g-accent) 40%, var(--g-line));
+  border-radius: 7px;
+  background: var(--surface);
+  box-shadow: inset 0 2px 0 rgb(70 55 130 / 0.08);
+  cursor: pointer;
+  vertical-align: middle;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.world-window-body input[type="radio"] {
+  border-radius: 50%;
+}
+.world-window-body input[type="checkbox"]:checked {
+  border-color: transparent;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='11' viewBox='0 0 14 11'%3E%3Cpath d='M1.5 5.5l3.5 3.5 7.5-7.5' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 13px no-repeat, linear-gradient(180deg, #62d6b1, #2f9d7d);
+  box-shadow: 0 2px 0 #1f7a5f;
+}
+.world-window-body input[type="radio"]:checked {
+  border-color: var(--g-accent);
+  background: radial-gradient(circle, var(--g-accent) 0 5px, var(--surface) 6px);
+}
+.world-window-body input[type="checkbox"]:active,
+.world-window-body input[type="radio"]:active {
+  transform: scale(0.9);
+}
+.world-window-body input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  padding: 9px 14px;
+  border: 2px solid var(--g-line);
+  border-radius: 12px;
+  font-weight: 700;
+  color: var(--g-ink);
+  background: var(--surface);
+  box-shadow: 0 3px 0 var(--g-raise);
+  cursor: pointer;
+}
+
+/* ---- Tabs: segmented switch ---- */
+.world-window-body [role="tablist"] {
+  display: inline-flex;
+  align-self: flex-start;
+  gap: 4px;
+  padding: 5px;
+  border-radius: 16px;
+  background: var(--g-slot);
+  border: 2px solid var(--g-line);
+  box-shadow: inset 0 2px 0 rgb(70 55 130 / 0.05);
+}
+.world-window-body [role="tablist"] > a,
+.world-window-body [role="tablist"] > button {
+  padding: 8px 16px !important;
+  border-radius: 11px !important;
+  font-weight: 700;
+  color: var(--muted) !important;
+  background: transparent !important;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.world-window-body [role="tablist"] > [aria-selected="true"],
+.world-window-body [role="tablist"] > [aria-current="page"] {
+  color: var(--g-ink) !important;
+  background: var(--surface) !important;
+  box-shadow: 0 3px 0 var(--g-raise), 0 6px 12px -8px rgb(70 55 130 / 0.4);
+}
+
+/* ---- Lists: row cards ---- */
+.world-window-body ul.divide-y,
+.world-window-body .game-list {
+  display: grid;
+  gap: 10px;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+.world-window-body ul.divide-y > li,
+.world-window-body .game-list > li {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--g-line) !important;
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: 0 3px 0 var(--g-raise);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.world-window-body ul.divide-y > li:hover,
+.world-window-body .game-list > li:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--g-accent) 45%, var(--g-line)) !important;
+  box-shadow: 0 5px 0 var(--g-raise), 0 14px 22px -16px rgb(70 55 130 / 0.45);
+}
+.world-window-body ul.divide-y > li > a:hover,
+.world-window-body .game-list > li > a:hover {
+  background: transparent;
+}
+.world-window-body ul.divide-y > li > :first-child {
+  padding-left: 20px;
+}
+/* Status stripe on task rows */
+.world-window-body .game-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: #c9c4d8;
+}
+.world-window-body .game-row[data-status="in_progress"]::before { background: #4c9be8; }
+.world-window-body .game-row[data-status="in_review"]::before { background: #f2b33d; }
+.world-window-body .game-row[data-status="revision_required"]::before { background: #ef7f5e; }
+.world-window-body .game-row[data-status="blocked"]::before { background: #e0533d; }
+.world-window-body .game-row[data-status="completed"]::before { background: #3fae8c; }
+.world-window-body .game-row[data-status="paused"]::before { background: #a8a2bf; }
+.world-window-body .game-row[data-status="private"]::before { background: #b7a2e8; }
+.world-window-body .game-row[data-urgent] {
+  box-shadow: 0 3px 0 #f2c1b8, 0 0 0 3px rgb(224 83 61 / 0.12);
+}
+.world-window-body .game-row .font-medium {
+  font-weight: 700;
+}
+
+/* ---- Tables: rows as cards ---- */
+.world-window-body table {
+  width: 100%;
+  border-collapse: separate !important;
+  border-spacing: 0 8px;
+  font-size: 13px;
+}
+.world-window-body thead th {
+  padding: 4px 12px !important;
+  border: 0 !important;
+  background: transparent !important;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--muted);
+}
+.world-window-body tbody td,
+.world-window-body tbody th {
+  padding: 11px 12px !important;
+  border: 0 !important;
+  border-top: 2px solid var(--g-line) !important;
+  border-bottom: 2px solid var(--g-line) !important;
+  background: var(--surface);
+  font-variant-numeric: tabular-nums;
+  transition: background 0.15s ease;
+}
+.world-window-body tbody tr > :first-child {
+  border-left: 2px solid var(--g-line) !important;
+  border-radius: 14px 0 0 14px;
+  font-weight: 700;
+}
+.world-window-body tbody tr > :last-child {
+  border-right: 2px solid var(--g-line) !important;
+  border-radius: 0 14px 14px 0;
+}
+.world-window-body tbody tr > :only-child {
+  border-radius: 14px;
+}
+.world-window-body tbody tr:hover > * {
+  background: color-mix(in srgb, var(--place-soft, #f1edfb) 50%, var(--surface));
+}
+.world-window-body .overflow-x-auto {
+  padding-inline: 2px;
+}
+
+/* ---- Chips ---- */
+.world-window-body .ui-badge {
+  gap: 4px;
+  padding: 3px 10px !important;
+  border: 1.5px solid transparent;
+  font-weight: 800 !important;
+  letter-spacing: 0.1px;
+  box-shadow: 0 2px 0 rgb(70 55 130 / 0.08);
+}
+.world-window-body .ui-badge--neutral { color: #5d5873 !important; background: #f0eef7 !important; border-color: #e1ddee; }
+.world-window-body .ui-badge--primary { color: #1f5f9e !important; background: #ddebfb !important; border-color: #bcd6f5; }
+.world-window-body .ui-badge--accent { color: #9a3f22 !important; background: #fde3da !important; border-color: #f7c7b6; }
+.world-window-body .ui-badge--danger { color: #a3271a !important; background: #ffe0dc !important; border-color: #f6b9b0; }
+.world-window-body .ui-badge--warning { color: #8a5a06 !important; background: #fdf0d2 !important; border-color: #f3d896; }
+.world-window-body .ui-badge--ok { color: #1f6b53 !important; background: #dcf3ea !important; border-color: #b4e2d0; }
+
+/* ---- Messages ---- */
+.world-window-body .ui-alert {
+  position: relative;
+  padding: 12px 14px 12px 18px !important;
+  border-width: 2px !important;
+  border-radius: 16px !important;
+  font-weight: 600;
+}
+.world-window-body .ui-alert::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 10px;
+  bottom: 10px;
+  width: 4px;
+  border-radius: 4px;
+  background: currentColor;
+  opacity: 0.6;
+}
+.world-window-body .ui-empty {
+  padding: 34px 16px !important;
+  border: 2px dashed var(--g-line) !important;
+  border-radius: 20px !important;
+  font-weight: 600;
+  background: repeating-linear-gradient(-45deg, transparent 0 10px, color-mix(in srgb, var(--g-slot) 70%, transparent) 10px 20px);
+}
+.world-window-body .ui-empty::before {
+  content: "✦";
+  display: block;
+  margin-bottom: 6px;
+  font-size: 22px;
+  color: var(--g-accent);
+}
+
+/* ---- Small text links read as actions ---- */
+.world-window-body a.text-primary {
+  font-weight: 700;
+  color: var(--g-ink);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--g-accent) 45%, transparent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .world-window-body .ui-btn,
+  .world-window-body ul.divide-y > li,
+  .world-window-body .game-list > li {
+    transition: none;
+  }
+  .world-window-body ul.divide-y > li:hover,
+  .world-window-body .game-list > li:hover,
+  .world-window-body .ui-btn:not(:disabled):hover {
+    transform: none;
+  }
+}
+
+/* ---- Menu panel (matches the game menu reference) ---- */
+.world .world-menu {
+  width: min(360px, calc(100vw - 2 * var(--world-gap)));
+  padding: 18px 14px 12px;
+  border-radius: 26px;
+}
+.world-menu-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 6px 14px;
+}
+.world-menu-head h2 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+.world-menu-head p {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.world-menu-head button {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  color: var(--text);
+  background: var(--surface);
+  border: 2px solid #ece8f6;
+  box-shadow: 0 3px 0 #e2dcf0;
+}
+.world-menu-head button:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #e2dcf0;
+}
+.world .world-menu ul {
+  gap: 8px;
+}
+.world .world-menu ul a {
+  min-height: 62px;
+  padding: 8px 12px 8px 8px;
+  gap: 14px;
+  border-radius: 18px;
+  font-size: 15px;
+  font-weight: 700;
+  background: var(--surface);
+  border: 2px solid #f0edf8;
+  box-shadow: 0 3px 0 #ebe6f6;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.world .world-menu ul a:hover {
+  transform: translateY(-2px);
+  background: color-mix(in srgb, var(--place-soft, #f1edfb) 45%, var(--surface));
+  box-shadow: 0 5px 0 #e4ddf2;
+}
+.world .world-menu ul a[aria-current="page"] {
+  background: color-mix(in srgb, var(--place-soft, #e7f1ff) 70%, var(--surface));
+  border-color: color-mix(in srgb, var(--place, #4c9be8) 35%, transparent);
+}
+.world .world-menu .world-menu-link-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  box-shadow: inset 0 -3px 0 rgb(0 0 0 / 0.05);
+}
+.world-menu-link-text {
+  flex: 1;
+  min-width: 0;
+}
+.world-menu-chevron {
+  color: var(--muted);
+}
+.world .world-menu .world-badge.is-inline {
+  margin-left: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .world .world-menu ul a:hover {
+    transform: none;
+  }
+}
+
+/* A collapsible section inside a card is part of that panel, not a second panel. */
+.world-window-body :is(.ui-card, form.rounded-2xl, section.rounded-2xl) details {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.world-window-body :is(.ui-card, form.rounded-2xl, section.rounded-2xl) details > summary {
+  padding: 0;
+}
+.world-window-body :is(.ui-card, form.rounded-2xl, section.rounded-2xl) details[open] > summary {
+  padding-bottom: 14px;
+}
+.world-window-body :is(.ui-card, form.rounded-2xl, section.rounded-2xl) details > :not(summary) {
+  margin: 16px 0 0;
+}
+
+/* The minimap steps aside when a window needs the room. */
+@media (max-width: 1279px) {
+  .world.has-window .hud-minimap {
+    display: none;
+  }
+}
+.world:has(.world-window.is-wide) .hud-minimap {
+  display: none;
+}
+
+/* Scrollable table panels keep a margin around their row cards. */
+.world-window-body .overflow-x-auto.p-0 {
+  padding: 4px 14px 10px !important;
+}

@@ -1,0 +1,22 @@
+export const officeCopy = {
+  th: {
+    eyebrow: "พื้นที่ทำงานของทีม", title: "อยู่ที่ไหน ก็ใกล้กัน", subtitle: "มองเห็นทีม ติดตามงาน และเชื่อมต่อกันในพื้นที่เดียว",
+    floor: "ออฟฟิศของเรา", floorHint: "พื้นที่เล็ก ๆ สำหรับไอเดียใหญ่ ๆ", team: "สมาชิกในทีม", search: "ค้นหาชื่อหรือหน้าที่…",
+    all: "ทั้งหมด", office: "ในออฟฟิศ", meeting: "กำลังประชุม", away: "ไม่อยู่", people: "คน", overview: "ภาพรวม", top: "มุมบน", lounge: "มุมพักผ่อน",
+    day: "แสงกลางวัน", evening: "แสงยามเย็น", reset: "รีเซ็ตมุมกล้อง", zoomIn: "ซูมเข้า", zoomOut: "ซูมออก", fullscreen: "เต็มหน้าจอ", exitFullscreen: "ออกจากเต็มหน้าจอ",
+    names: "แสดงชื่อ", updated: "ข้อมูล ณ", legend: "ภาระงาน", idle: "ว่าง", light: "เบา · 1–2", busy: "ปานกลาง · 3–4", heavy: "มาก · 5+",
+    noResults: "ไม่พบสมาชิกที่ค้นหา", clearSearch: "ล้างการค้นหา", noPeople: "สมาชิกในทีมจะปรากฏที่นี่เมื่อเพิ่มบัญชีแล้ว", back: "กลับไปที่ทีม", profile: "รายละเอียดสมาชิก",
+    workload: "ภาพรวมงาน", work: "งานที่รับผิดชอบ", viewTasks: "ดูงานทั้งหมด", tasks: "งาน", snapshot: "ตำแหน่งอ้างอิงจากตารางประชุมและวันลา", room: "ห้องประชุม", loading: "กำลังจัดเตรียมออฟฟิศ…",
+    controlHint: "ลากเพื่อหมุน · เลื่อนเพื่อซูม", selectHint: "เลือกตัวละครหรือรายชื่อเพื่อดูงาน", help: "วิธีใช้งาน", closeHelp: "ปิดคำแนะนำ", unassigned: "รอมอบหมาย", viewInbox: "ดูงานรอมอบหมาย", detail: "ดูรายละเอียด", map: "ผังออฟฟิศ", list: "รายชื่อ", sceneFailed: "แสดงรายชื่อแทนฉาก 3D เนื่องจากอุปกรณ์ไม่สามารถแสดงฉากได้", urgent: "งานด่วนที่รับผิดชอบ", places: "สถานที่ในออฟฟิศ", menu: "เมนู", closeMenu: "ปิดเมนู", backToOffice: "กลับสู่ออฟฟิศ", myDesk: "โต๊ะของฉัน", clickHint: "คลิกสิ่งของในออฟฟิศเพื่อเปิดงาน ปฏิทิน รายงาน และอื่น ๆ", widen: "ขยายหน้าต่าง", narrow: "ย่อหน้าต่าง", view2d: "มุมมอง 2D", view3d: "มุมมอง 3D", lobby: "วันนี้จะไปที่ไหนดี?", account: "บัญชีของฉัน", menuSubtitle: "จัดการการทำงานในออฟฟิศของคุณ", minimap: "แผนที่ออฟฟิศ", hideMap: "ซ่อนแผนที่", showMap: "แสดงแผนที่", you: "คุณ", camera: "กล้อง", qualityHigh: "ภาพสวยเต็มที่", qualityLow: "โหมดประหยัดเครื่อง", hotbar: "ทางลัดสถานที่", keysHint: "กด 1–9 ไปยังสถานที่ · Esc กลับออฟฟิศ", escClose: "กด Esc เพื่อกลับออฟฟิศ", openPlace: "เปิด",
+  },
+  en: {
+    eyebrow: "YOUR TEAM, ONE SPACE", title: "A little closer, wherever you work.", subtitle: "See your people, follow the work, and find your flow. Together.",
+    floor: "Our workspace", floorHint: "A little space for big ideas", team: "The team", search: "Search name or role…",
+    all: "Everyone", office: "In office", meeting: "In meetings", away: "Away", people: "people", overview: "Overview", top: "Top view", lounge: "Lounge",
+    day: "Daylight", evening: "Evening light", reset: "Reset camera", zoomIn: "Zoom in", zoomOut: "Zoom out", fullscreen: "Full screen", exitFullscreen: "Exit full screen",
+    names: "Show names", updated: "Updated", legend: "Workload", idle: "Available", light: "Light · 1–2", busy: "Moderate · 3–4", heavy: "High · 5+",
+    noResults: "No matching teammates", clearSearch: "Clear search", noPeople: "Your team will appear here once accounts are added", back: "Back to team", profile: "Team member details",
+    workload: "Workload overview", work: "Assigned work", viewTasks: "View all tasks", tasks: "tasks", snapshot: "Locations follow meetings and leave schedules", room: "Meeting room", loading: "Getting your workspace ready…",
+    controlHint: "Drag to orbit · Scroll to zoom", selectHint: "Choose a person to explore their work", help: "Controls", closeHelp: "Close controls", unassigned: "To assign", viewInbox: "View unassigned work", detail: "View details", map: "Office map", list: "Directory", sceneFailed: "Showing the directory because this device could not render the 3D scene", urgent: "Urgent assignments", places: "Places in the office", menu: "Menu", closeMenu: "Close menu", backToOffice: "Back to the office", myDesk: "My desk", clickHint: "Click things in the office to open tasks, calendar, reports and more", widen: "Widen window", narrow: "Narrow window", view2d: "2D view", view3d: "3D view", lobby: "Where to today?", account: "My account", menuSubtitle: "Manage your work in the office", minimap: "Office map", hideMap: "Hide map", showMap: "Show map", you: "You", camera: "Camera", qualityHigh: "Best visuals", qualityLow: "Battery saver", hotbar: "Place shortcuts", keysHint: "Press 1–9 to go somewhere · Esc for the office", escClose: "Press Esc to return to the office", openPlace: "Open",
+  },
+};

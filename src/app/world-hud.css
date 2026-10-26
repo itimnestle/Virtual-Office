@@ -1,0 +1,491 @@
+/* Game-style HUD: player card, hotbar, minimap and camera rail (loaded last). */
+
+.world {
+  --hud-hotbar-h: 78px;
+}
+
+/* ---- Player card (top-left) ---- */
+.hud-player {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  max-width: 320px;
+  padding: 6px 16px 6px 6px;
+  border-radius: 20px;
+  background: var(--glass-strong);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(16px);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+a.hud-player:hover {
+  transform: translateY(-1px);
+}
+.hud-player-portrait {
+  position: relative;
+  flex: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(150deg, #e6f6ef, #ece6fb);
+  box-shadow: inset 0 0 0 2px #ffffffcc;
+}
+.hud-player-portrait .person-portrait {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.hud-player-initial {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(140deg, #6fd3b2, #36a185);
+}
+.hud-player-text {
+  display: grid;
+  min-width: 0;
+  line-height: 1.25;
+}
+.hud-player-text small {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.hud-player-text strong {
+  font-size: 15px;
+  font-weight: 700;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.hud-player-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.hud-player-meta em {
+  font-style: normal;
+}
+.hud-player-place {
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-weight: 600;
+  color: #1f6b53;
+  background: #dcf3ea;
+}
+.hud-player-place.is-meeting { color: #1f5f9e; background: #ddebfb; }
+.hud-player-place.is-lounge { color: #94521a; background: #fde8d3; }
+.hud-player-place.is-home,
+.hud-player-place.is-offsite { color: #7d3289; background: #f5e2f8; }
+
+/* ---- Hotbar (bottom centre) ---- */
+.hud-hotbar {
+  position: absolute;
+  z-index: 28;
+  left: 50%;
+  bottom: var(--world-gap);
+  transform: translateX(-50%);
+  max-width: calc(100vw - 2 * var(--world-gap) - 140px);
+}
+.hud-hotbar ol {
+  display: flex;
+  gap: 6px;
+  padding: 7px;
+  border-radius: 22px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: var(--glass-strong);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(16px);
+}
+.hud-slot {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 3px;
+  width: 62px;
+  height: 62px;
+  border-radius: 16px;
+  color: var(--place-ink, var(--text));
+  background: color-mix(in srgb, var(--place-soft, var(--surface-2)) 55%, transparent);
+  border: 2px solid transparent;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+.hud-slot:hover {
+  transform: translateY(-3px);
+  background: var(--place-soft, var(--surface-2));
+}
+.hud-slot[aria-current="page"] {
+  background: var(--place-soft, var(--surface-2));
+  border-color: var(--place, var(--primary));
+  box-shadow: 0 6px 14px -8px var(--place, var(--primary));
+}
+.hud-slot-key {
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  font-size: 9px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--place-ink, var(--text)) 70%, transparent);
+}
+.hud-slot-art {
+  display: grid;
+  place-items: center;
+  height: 28px;
+}
+.hud-slot-label {
+  max-width: 56px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 10px;
+  font-weight: 600;
+}
+.hud-slot-badge {
+  position: absolute;
+  top: -5px;
+  right: -4px;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(140deg, #ff9a73, #ef6f4f);
+  box-shadow: 0 2px 6px rgb(239 111 79 / 0.35);
+}
+
+/* ---- Minimap (bottom-left) ---- */
+.hud-minimap {
+  position: absolute;
+  z-index: 24;
+  left: var(--world-gap);
+  bottom: var(--world-gap);
+  width: 250px;
+  padding: 10px 10px 8px;
+  border-radius: 20px;
+  background: var(--glass-strong);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(16px);
+}
+.hud-minimap.is-collapsed {
+  width: auto;
+  padding-bottom: 10px;
+}
+.hud-minimap header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 2px 8px;
+  font-size: 12px;
+}
+.hud-minimap.is-collapsed header {
+  padding-bottom: 0;
+}
+.hud-minimap header strong {
+  font-weight: 700;
+}
+.hud-minimap header button {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin-left: auto;
+  border-radius: 8px;
+  color: var(--muted);
+  background: var(--surface-2);
+}
+.hud-minimap-counts {
+  display: flex;
+  gap: 4px;
+}
+.hud-minimap-counts span {
+  min-width: 22px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+}
+.hud-minimap-counts .is-office { color: #1f6b53; background: #dcf3ea; }
+.hud-minimap-counts .is-meeting { color: #1f5f9e; background: #ddebfb; }
+.hud-minimap-counts .is-away { color: #7d3289; background: #f5e2f8; }
+.hud-minimap-floor {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #eef2ec;
+}
+.hud-minimap-floor svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.hud-minimap-room {
+  fill: #fbf8f1;
+  stroke: #c9bde8;
+  stroke-width: 0.25;
+}
+.hud-minimap-desk {
+  fill: #e4d3b8;
+}
+.hud-minimap-pin,
+.hud-minimap-person {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 0;
+}
+.hud-minimap-pin {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 7px;
+  border: 1.5px solid;
+  transition: transform 0.15s ease;
+}
+.hud-minimap-pin:hover,
+.hud-minimap-pin.is-active {
+  transform: translate(-50%, -50%) scale(1.25);
+  z-index: 2;
+}
+.hud-minimap-person {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid #fff;
+  background: #9ca3af;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
+  z-index: 3;
+}
+.hud-minimap-person.is-light { background: #4ade80; }
+.hud-minimap-person.is-busy { background: #fbbf24; }
+.hud-minimap-person.is-heavy { background: #f87171; }
+.hud-minimap-person.is-you {
+  width: 13px;
+  height: 13px;
+  outline: 2px solid #3fae8c;
+  outline-offset: 1px;
+}
+.hud-minimap-person.is-selected {
+  outline: 2px solid #2f7d6d;
+  outline-offset: 2px;
+}
+.hud-minimap-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin-top: 7px;
+  padding: 0 2px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.hud-minimap-legend span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.hud-minimap-legend i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #9ca3af;
+}
+.hud-minimap-legend .is-light { background: #4ade80; }
+.hud-minimap-legend .is-busy { background: #fbbf24; }
+.hud-minimap-legend .is-heavy { background: #f87171; }
+
+/* ---- Camera rail (right) ---- */
+.world-rail {
+  position: absolute;
+  z-index: 22;
+  right: var(--world-gap);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 6px;
+  border-radius: 18px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(14px);
+}
+.world-rail .office-tool {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
+}
+.world-rail .office-tool:hover,
+.world-rail .office-tool.is-active {
+  color: var(--primary);
+  background: #e3f4ed;
+}
+.world-rail-sep {
+  height: 1px;
+  margin: 3px 6px;
+  background: var(--border);
+}
+.world .world-help {
+  bottom: calc(var(--world-gap) + var(--hud-hotbar-h) + 10px);
+}
+
+/* ---- Window: leave room for the hotbar; Esc keycap ---- */
+.world .world-window {
+  bottom: calc(var(--world-gap) + var(--hud-hotbar-h) + 10px);
+}
+.world-window-esc {
+  padding: 3px 7px;
+  border-radius: 7px;
+  font: 600 11px/1 ui-monospace, "Cascadia Mono", Menlo, monospace;
+  color: var(--muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+}
+.world .world-menu-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 6px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 13px;
+  background: var(--surface-2);
+}
+.world .world-menu-brand small {
+  display: block;
+  font-weight: 500;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+/* The team drawer sits where the minimap was. */
+.world .world-team {
+  bottom: calc(var(--world-gap) + var(--hud-hotbar-h) + 10px);
+}
+
+@media (max-width: 1100px) and (min-width: 768px) {
+  .hud-minimap {
+    bottom: calc(var(--world-gap) + var(--hud-hotbar-h) + 10px);
+    width: 210px;
+  }
+}
+
+@media (max-width: 767px) {
+  .world {
+    --hud-hotbar-h: 60px;
+  }
+  .hud-player {
+    max-width: calc(100vw - 140px);
+    padding: 4px 12px 4px 4px;
+    border-radius: 16px;
+  }
+  .hud-player-portrait {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
+  .hud-player-text small {
+    display: none;
+  }
+  .hud-player-text strong {
+    font-size: 14px;
+  }
+  .hud-hotbar {
+    left: var(--world-gap);
+    right: 76px;
+    transform: none;
+    max-width: none;
+  }
+  .hud-hotbar ol {
+    padding: 5px;
+    gap: 4px;
+    border-radius: 18px;
+  }
+  .hud-slot {
+    flex: none;
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+  }
+  .hud-slot-label {
+    display: none;
+  }
+  .hud-slot-key {
+    display: none;
+  }
+  .world.has-window .hud-hotbar,
+  .world.has-window .hud-minimap {
+    display: none;
+  }
+  .hud-minimap {
+    bottom: calc(var(--world-gap) + var(--hud-hotbar-h) + 10px);
+    width: min(230px, calc(100vw - 2 * var(--world-gap)));
+  }
+  .world-rail {
+    top: 72px;
+    transform: none;
+    padding: 4px;
+  }
+  .world-rail .office-tool {
+    width: 34px;
+    height: 34px;
+  }
+  .world .world-window,
+  .world .world-window.is-wide {
+    bottom: 0;
+  }
+  .world .world-team {
+    bottom: calc(var(--world-gap) + var(--hud-hotbar-h) + 10px);
+  }
+}
+
+@media (max-height: 640px) and (max-width: 767px) {
+  .world-rail .office-tool:nth-child(n + 9) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hud-slot:hover,
+  a.hud-player:hover {
+    transform: none;
+  }
+}
+
+/* Short screens: the rail starts under the HUD, stops above the chat button and scrolls. */
+.world .world-rail {
+  top: calc(var(--world-gap) + 66px);
+  transform: none;
+  max-height: calc(100dvh - 2 * var(--world-gap) - 66px - 84px);
+  overflow-y: auto;
+  scrollbar-width: none;
+}

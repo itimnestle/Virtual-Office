@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+/* Theme follows data-theme on <html>; "system" leaves it unset and uses the media query. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  --bg: #f6f7f2;
+  --surface: #ffffff;
+  --surface-2: #eef1e9;
+  --border: #e2e6dc;
+  --text: #293c34;
+  --muted: #7a857c;
+  --primary: #4e715a;
+  --primary-fg: #ffffff;
+  --accent: #f08a5d;
+  --danger: #c2413a;
+  --warning: #b7791f;
+  --ok: #2f855a;
+  --ring: #2f7d6d55;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b1a19;
+    --surface: #242220;
+    --surface-2: #2d2a27;
+    --border: #3a3633;
+    --text: #f1ece6;
+    --muted: #a99f95;
+    --primary: #5cc2ab;
+    --primary-fg: #10201c;
+    --accent: #f4a27e;
+    --danger: #f07167;
+    --warning: #f6c062;
+    --ok: #68d391;
+    --ring: #5cc2ab55;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #1b1a19;
+  --surface: #242220;
+  --surface-2: #2d2a27;
+  --border: #3a3633;
+  --text: #f1ece6;
+  --muted: #a99f95;
+  --primary: #5cc2ab;
+  --primary-fg: #10201c;
+  --accent: #f4a27e;
+  --danger: #f07167;
+  --warning: #f6c062;
+  --ok: #68d391;
+  --ring: #5cc2ab55;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-primary-fg: var(--primary-fg);
+  --color-accent: var(--accent);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-ok: var(--ok);
+  /* System fonts with Thai coverage: Windows (Leelawadee UI), iOS/macOS (Thonburi). */
+  --font-sans: system-ui, -apple-system, "Segoe UI", "Leelawadee UI", "Thonburi", "Noto Sans Thai", "Noto Sans", sans-serif;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Reduce motion: user setting OR OS preference. */
+[data-reduce-motion="true"] *,
+[data-reduce-motion="true"] *::before,
+[data-reduce-motion="true"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

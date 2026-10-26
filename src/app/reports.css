@@ -1,0 +1,190 @@
+/* Report charts — chart tokens per the validated reference palette (series-1 blue). */
+.viz-root {
+  --viz-series-1: #2a78d6;
+  --viz-grid: #e1e0d9;
+  --viz-track: #f2f1ec;
+  --viz-ink: var(--text);
+  --viz-muted: var(--muted);
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) .viz-root {
+    --viz-series-1: #3987e5;
+    --viz-grid: #2c2c2a;
+    --viz-track: #2d2a27;
+  }
+}
+:root[data-theme="dark"] .viz-root {
+  --viz-series-1: #3987e5;
+  --viz-grid: #2c2c2a;
+  --viz-track: #2d2a27;
+}
+
+.viz-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+.viz-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--viz-ink);
+}
+.viz-empty {
+  padding: 24px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--viz-muted);
+}
+.viz-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.viz-bar-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(90px, 34%) 1fr;
+  align-items: center;
+  gap: 10px;
+  min-height: 30px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  color: var(--viz-ink);
+  outline-offset: 1px;
+}
+.viz-bar-row:hover,
+.viz-bar-row:focus-visible {
+  background: var(--surface-2);
+}
+.viz-bar-label {
+  overflow: hidden;
+  font-size: 12.5px;
+  color: var(--text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.viz-bar-track {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  border-left: 1px solid var(--viz-grid);
+}
+.viz-bar {
+  height: 14px;
+  /* Square at the baseline, 4px rounded data end. */
+  border-radius: 0 4px 4px 0;
+  background: var(--viz-series-1);
+}
+.viz-bar-row:hover .viz-bar,
+.viz-bar-row:focus-visible .viz-bar {
+  filter: brightness(1.12);
+}
+.viz-bar-value {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.viz-tooltip {
+  position: absolute;
+  z-index: 5;
+  top: calc(100% + 2px);
+  left: 34%;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.12);
+  font-size: 12px;
+  color: var(--muted);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.viz-tooltip strong {
+  font-size: 14px;
+  color: var(--text);
+}
+.viz-table summary {
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--primary);
+}
+.viz-table table {
+  width: 100%;
+  margin-top: 8px;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.viz-table th,
+.viz-table td {
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--viz-grid);
+  text-align: left;
+  font-weight: 400;
+}
+.viz-table td {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Stat tiles (hero numbers). */
+.viz-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+.viz-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+.viz-tile small {
+  font-size: 12px;
+  color: var(--muted);
+}
+.viz-tile strong {
+  font-size: 28px;
+  font-weight: 650;
+  line-height: 1.1;
+  color: var(--text);
+}
+.viz-tile span {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.report-table th,
+.report-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.report-table th:first-child,
+.report-table td:first-child,
+.report-table .is-name {
+  text-align: left;
+}
+.report-table thead th {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--muted);
+}

@@ -1,0 +1,73 @@
+/* Fine finishes for the full-screen office and its floating controls. */
+.world {
+  --glass: color-mix(in srgb, var(--surface) 92%, transparent);
+  --glass-shadow: 0 14px 40px -18px rgb(37 56 40 / .22), 0 2px 6px rgb(37 56 40 / .04);
+}
+.world-stage { background: radial-gradient(ellipse at 55% 40%, #f2f1e8, #e5eadf 58%, #d5dfd0); }
+.world.is-evening .world-stage { background: radial-gradient(ellipse at 55% 40%, #85818b, #575c6b 62%, #414957); }
+.world-hud { top: 20px; left: 24px; right: 24px; gap: 10px; }
+.world-brand { padding: 7px 16px 7px 7px; height: 52px; border-radius: 16px; gap: 11px; }
+.world-brand-mark { width: 37px; height: 38px; border-radius: 11px 11px 11px 4px; }
+.world-brand-text { font-size: 13px; letter-spacing: -.25px; }
+.world-brand-text small { display: block; margin-top: 4px; font-size: 7px; font-weight: 500; letter-spacing: 1.6px; color: var(--muted); }
+.world-hud-button { min-width: 44px; height: 44px; justify-content: center; border-radius: 13px; font-size: 12px; }
+.world-hud-button.is-menu { padding-inline: 15px; }
+.world-overview {
+  position: absolute; z-index: 10; top: 96px; left: 24px; width: 278px;
+  padding: 21px 20px 14px; border: 1px solid var(--glass-border); border-radius: 18px;
+  background: var(--glass); box-shadow: var(--glass-shadow); backdrop-filter: blur(18px);
+}
+.world-overview-eyebrow { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 9px; letter-spacing: 1px; }
+.world-overview-eyebrow > span:first-child { width: 5px; height: 5px; border-radius: 50%; background: #8fa381; }
+.world-floor-number { margin-left: auto; font-size: 11px; font-family: Georgia, serif; color: var(--primary); }
+.world-overview h2 { margin-top: 10px; font-size: 26px; font-weight: 550; letter-spacing: -.8px; line-height: 1.5; }
+.world-overview-description { margin-top: 4px; color: var(--muted); font-size: 10px; line-height: 1.8; }
+.world-overview-counts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 18px; }
+.world-overview-counts button { display: grid; grid-template-columns: 26px 1fr; align-items: center; gap: 5px; text-align: left; padding: 8px 5px; border-radius: 9px; transition: background .2s; }
+.world-overview-counts button:hover { background: var(--surface-2); }
+.world-count-icon { width: 26px; height: 29px; display: grid; place-items: center; border-radius: 8px; }
+.world-count-icon.is-office { color: #6d8564; background: #e9efe1; }
+.world-count-icon.is-meeting { color: #78949a; background: #e9f0f1; }
+.world-count-icon.is-away { color: #af9565; background: #f3eddf; }
+.world-overview-counts strong { font-size: 23px; font-weight: 550; line-height: 1; font-variant-numeric: tabular-nums; }
+.world-overview-counts small { grid-column: 1 / -1; color: var(--muted); font-size: 9px; margin-top: 2px; }
+.world-overview-foot { display: flex; align-items: center; justify-content: space-between; gap: 5px; border-top: 1px solid var(--border); margin-top: 14px; padding-top: 12px; font-size: 8px; color: var(--muted); }
+.world-overview-foot > span, .world-overview-foot > button { display: flex; align-items: center; gap: 5px; }
+.world-overview-foot > button { color: var(--primary); padding-block: 4px; }
+.world-workload-legend { position: absolute; z-index: 10; bottom: 94px; left: 24px; display: flex; flex-wrap: wrap; gap: 10px; max-width: 300px; color: var(--muted); font-size: 9px; padding: 12px 14px; border: 1px solid var(--glass-border); border-radius: 11px; background: var(--glass); backdrop-filter: blur(12px); }
+.world-workload-legend strong { width: 100%; color: var(--text); font-size: 10px; font-weight: 550; }
+.world-workload-legend > span { display: flex; align-items: center; gap: 5px; }
+.world-workload-legend i { width: 6px; height: 6px; border-radius: 50%; background: #a3aca5; }
+.world-workload-legend .is-light { background: #8aa87e; }.world-workload-legend .is-busy { background: #d2b071; }.world-workload-legend .is-heavy { background: #ce8a78; }
+.world-dock { padding: 7px; border-radius: 17px; gap: 3px; bottom: 20px; }
+.world-dock-view { font-size: 11px; height: 38px; padding-inline: 12px; }
+.world-dock .office-tool { background: transparent; border-color: transparent; color: var(--muted); width: 38px; height: 38px; border-radius: 10px; }
+.world-dock .office-tool:hover, .world-dock .office-tool.is-active { color: var(--primary); background: var(--surface-2); }
+.world-dock .office-tool:disabled { opacity: .35; }
+.world-menu { top: 84px; right: 24px; border-radius: 18px; padding: 14px; }
+.world-menu a { padding: 10px; font-size: 12px; min-height: 44px; }
+.world-menu-link-icon { width: 31px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: var(--surface-2); color: var(--primary); }
+.world-menu-label { font-size: 9px; margin-bottom: 12px; }
+.world-team { top: 88px; left: 24px; width: 320px; padding-top: 18px; border-radius: 18px; }
+.world-team-head { padding-inline: 18px; margin-bottom: 4px; }.world-team-head h2 { font-size: 14px; font-weight: 600; }.world-team-head > button { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 8px; background: var(--surface-2); color: var(--muted); }
+.world-team-list { scrollbar-width: thin; scrollbar-color: var(--border) transparent; overscroll-behavior: contain; }.world-team-list .office-person-row { padding: 14px 12px; }.world-team .person-detail { padding-top: 0; }
+.world-window { border-radius: 19px; top: 88px; }.world-window-head { padding: 13px 14px 13px 22px; background: color-mix(in srgb, var(--surface-2) 28%, transparent); }.world-window-head h2 { font-size: 14px; font-weight: 600; }.world-window-tabs a { font-size: 11px; }.world-window-body { padding-top: 26px; }
+.world-lobby-places a { box-shadow: 0 3px 12px #273e2c04; font-size: 13px; transition: border-color .2s, transform .2s; }.world-lobby-places a:hover { transform: translateY(-2px); }
+@media (max-width: 1100px) { .world-overview { width: 240px; padding: 17px 16px 12px; }.world-overview h2 { font-size: 23px; }.world-overview-counts button { grid-template-columns: 23px 1fr; gap: 4px; padding-inline: 3px; }.world-count-icon { width: 23px; }.world-overview-foot { font-size: 7px; } }
+@media (max-width: 767px) {
+  .world-hud { top: 12px; left: 12px; right: 12px; }.world-brand { height: 44px; padding: 4px; border-radius: 13px; }.world-brand-mark { width: 34px; height: 34px; }.world-hud-button { height: 44px; }.world-hud-button.is-menu { padding-inline: 12px; }
+  .world-overview { top: 74px; left: 12px; right: 12px; width: auto; padding: 13px 16px 11px; border-radius: 14px; }.world-overview h2 { font-size: 22px; margin-top: 4px; }.world-overview-description { display: none; }.world-overview-eyebrow { font-size: 8px; }.world-overview-counts { margin-top: 7px; gap: 7px; }.world-overview-counts button { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 0; min-height: 40px; }.world-overview-counts small { margin: 0; font-size: 8px; }.world-overview-counts strong { font-size: 21px; }.world-count-icon { width: 25px; height: 28px; }.world-overview-foot { display: none; }.world-workload-legend { display: none; }
+  .world-dock { left: 12px; bottom: 12px; width: min(390px, calc(100vw - 86px)); max-width: none; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 3px; padding: 6px; border-radius: 15px; overflow: visible; }.world-dock-sep { display: none; }.world-dock-view, .world-dock .office-tool { width: 100%; min-width: 0; height: 41px; padding: 0; justify-content: center; }.world-dock-view span { display: none; }
+  .world-menu { top: 66px; right: 12px; }.world-team { top: 68px; left: 12px; bottom: 118px; width: calc(100vw - 24px); max-height: 70dvh; }.world-help { bottom: 118px; font-size: 12px; }.world-window, .world-window.is-wide { top: 28dvh; border-radius: 19px 19px 0 0; }.world-window-head { padding: 11px 12px 11px 16px; }.world-window-body { padding-top: 20px; }
+}
+@media (max-width: 359px) { .world-dock { grid-template-columns: repeat(5, minmax(0, 1fr)); }.world-team { bottom: 160px; }.world-help { bottom: 164px; }.world-overview-counts small { font-size: 7px; } }
+@media (max-height: 600px) { .world-overview { display: none; }.world-workload-legend { bottom: 80px; }.world-team { top: 72px; }.world-window { top: 72px; } }
+@media (max-width: 767px) {
+  .world-team.is-person { top: auto; bottom: 118px; max-height: 44dvh; }
+}
+@media (max-width: 359px) {
+  .world-team.is-person { bottom: 160px; max-height: 38dvh; }
+}
+@media (max-width: 767px) {
+  .world-team .office-search input { font-size: 16px; }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "virtual-office-video",
+  "private": true,
+  "type": "module",
+  "description": "Product showcase video: captures the running app, animates a storyboard in HTML, renders frames with Chrome and encodes with FFmpeg.",
+  "scripts": {
+    "capture": "node capture.mjs",
+    "preview": "node preview.mjs",
+    "render": "node render.mjs"
+  },
+  "dependencies": {
+    "puppeteer-core": "25.13.0"
+  }
+}

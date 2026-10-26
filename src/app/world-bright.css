@@ -1,0 +1,288 @@
+/*
+ * Bright, friendly finish for the 3D office shell (loaded after world.css and
+ * world-polish.css). The office stays light unless the user explicitly picks
+ * the dark theme in Settings; "system" no longer turns the office dark.
+ */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]):has(.world) {
+    --bg: #f6f8f4;
+    --surface: #ffffff;
+    --surface-2: #f0f4ee;
+    --border: #e3e9e1;
+    --text: #24352e;
+    --muted: #6f7d75;
+    --primary: #2f7d62;
+    --primary-fg: #ffffff;
+    --accent: #f08a5d;
+    --danger: #c2413a;
+    --warning: #b7791f;
+    --ok: #2f855a;
+    --ring: #2f7d6d55;
+  }
+}
+:root:not([data-theme="dark"]):has(.world) {
+  color-scheme: light;
+}
+
+:root:not([data-theme="dark"]) .world {
+  --glass: rgb(255 255 255 / 0.8);
+  --glass-strong: rgb(255 255 255 / 0.95);
+  --glass-border: rgb(255 255 255 / 0.95);
+  --glass-shadow: 0 14px 34px -16px rgb(52 88 104 / 0.32), 0 2px 6px rgb(52 88 104 / 0.06);
+}
+
+/* ---- Sky behind the room ---- */
+:root .world .world-stage {
+  background:
+    radial-gradient(34% 14% at 16% 15%, rgb(255 255 255 / 0.9), transparent 70%),
+    radial-gradient(26% 11% at 80% 9%, rgb(255 255 255 / 0.75), transparent 70%),
+    radial-gradient(22% 9% at 62% 22%, rgb(255 255 255 / 0.55), transparent 70%),
+    radial-gradient(70% 45% at 50% 105%, #fcefd8 0%, transparent 70%),
+    linear-gradient(180deg, #bfe2f5 0%, #d9eff2 40%, #f1f3e8 76%, #f8ecd9 100%);
+}
+:root .world.is-evening .world-stage {
+  background:
+    radial-gradient(40% 22% at 50% 92%, rgb(255 214 170 / 0.8), transparent 70%),
+    radial-gradient(30% 12% at 20% 18%, rgb(255 236 228 / 0.55), transparent 70%),
+    linear-gradient(180deg, #f2b694 0%, #ecbfcb 42%, #cdbee6 78%, #b3b2de 100%);
+}
+:root[data-theme="dark"] .world .world-stage {
+  background:
+    radial-gradient(70% 45% at 50% 105%, #4a4f72 0%, transparent 70%),
+    linear-gradient(180deg, #27304a 0%, #323b5a 55%, #3d4566 100%);
+}
+
+/* ---- HUD ---- */
+.world .world-brand,
+.world .world-place,
+.world .world-hud-button {
+  border-radius: 16px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+.world .world-hud-button:hover,
+.world .world-brand:hover {
+  transform: translateY(-1px);
+}
+.world .world-brand-mark {
+  color: #fff;
+  background: linear-gradient(140deg, #6fd3b2 0%, #36a185 100%);
+  box-shadow: inset 0 -2px 0 rgb(0 0 0 / 0.08);
+}
+.world .world-place {
+  gap: 9px;
+  padding-left: 6px;
+  color: var(--place-ink, var(--text));
+}
+.world-place-emoji,
+.world-window-emoji {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 11px;
+  font-size: 17px;
+  background: var(--place-soft, var(--surface-2));
+}
+.world .world-badge {
+  background: linear-gradient(140deg, #ff9a73, #ef6f4f);
+  box-shadow: 0 2px 6px rgb(239 111 79 / 0.35);
+}
+
+/* ---- Overview card ---- */
+.world .world-overview h2 {
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.3px;
+}
+.world .world-overview h2 strong {
+  color: var(--primary);
+  font-weight: 700;
+}
+.world-overview-wave {
+  display: inline-block;
+  margin-right: 6px;
+}
+.world .world-overview,
+.world .world-workload-legend,
+.world .world-team,
+.world .world-menu,
+.world .world-dock {
+  border-radius: 20px;
+}
+
+/* ---- Menu ---- */
+.world .world-menu-link-icon {
+  color: var(--place-ink, var(--primary));
+  background: var(--place-soft, var(--surface-2));
+  border-radius: 11px;
+}
+.world .world-menu a {
+  border-radius: 13px;
+  transition: background 0.15s ease;
+}
+.world .world-menu a:hover {
+  background: color-mix(in srgb, var(--place-soft, var(--surface-2)) 55%, transparent);
+}
+.world .world-menu a[aria-current="page"] {
+  color: var(--place-ink, var(--primary));
+  background: var(--place-soft, var(--surface-2));
+}
+.world .world-menu-avatar {
+  background: linear-gradient(140deg, #6fd3b2 0%, #36a185 100%);
+}
+
+/* ---- Dock ---- */
+.world .world-dock-view,
+.world .world-dock .office-tool {
+  border-radius: 12px;
+}
+.world .world-dock-view[aria-pressed="true"] {
+  color: #fff;
+  background: linear-gradient(140deg, #4cbf9b, #2f9479);
+  box-shadow: 0 4px 10px -4px rgb(47 148 121 / 0.6);
+}
+.world .world-dock .office-tool.is-active {
+  color: var(--primary);
+  background: #e3f4ed;
+}
+
+/* ---- Page window ---- */
+.world .world-window {
+  border-radius: 24px;
+  background: var(--glass-strong);
+  border: 1px solid var(--glass-border);
+}
+.world .world-window-head {
+  border-bottom-color: color-mix(in srgb, var(--place, var(--border)) 18%, var(--border));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--place-soft, var(--surface-2)) 80%, transparent), transparent);
+  border-radius: 24px 24px 0 0;
+}
+.world .world-window-head h2 {
+  gap: 11px;
+  font-size: 15px;
+  color: var(--place-ink, var(--text));
+}
+.world .world-window-tabs a[aria-current="page"] {
+  color: var(--place-ink, var(--primary));
+  background: var(--place-soft, var(--surface-2));
+}
+.world .world-window-tool {
+  border-radius: 12px;
+  background: rgb(255 255 255 / 0.6);
+}
+:root[data-theme="dark"] .world .world-window-tool {
+  background: transparent;
+}
+
+/* ---- 2D lobby ---- */
+.world .world-lobby-places a {
+  border-radius: 18px;
+}
+.world .world-lobby-emoji {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: var(--place-soft, var(--surface-2));
+}
+.world .world-lobby-places a:hover {
+  border-color: var(--place, var(--primary));
+}
+
+/* ---- Friendly focus ring everywhere in the shell ---- */
+.world :focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--primary) 45%, transparent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .world .world-hud-button:hover,
+  .world .world-brand:hover {
+    transform: none;
+  }
+}
+
+/* Mid-size screens: icon-only camera views keep the dock clear of the chat button. */
+@media (min-width: 768px) and (max-width: 1100px) {
+  .world .world-dock-view span {
+    display: none;
+  }
+  .world .world-dock-view {
+    width: 38px;
+    padding: 0;
+    justify-content: center;
+  }
+}
+
+/* Focus lands on the window title only to announce the page; no ring needed there. */
+.world #world-window-title:focus,
+.world #world-window-title:focus-visible {
+  outline: none;
+}
+/* Original candy-colour vector set and a more playful, readable workspace. */
+.world .world-place-art, .world .world-window-art, .world .world-lobby-art {
+  display: inline-grid; place-items: center; flex-shrink: 0;
+  width: 36px; height: 36px; border-radius: 12px;
+  background: var(--place-soft, #edf4ff);
+}
+.world .world-lobby-art { width: 48px; height: 48px; border-radius: 16px; }
+.world .world-brand-mark { background: #effff8; border: 1px solid #cbf1e5; box-shadow: none; }
+.world .world-brand-text { letter-spacing: -.2px; }
+.world .world-overview { overflow: hidden; background: linear-gradient(145deg, var(--surface) 64%, color-mix(in srgb, #dfd4ff 32%, var(--surface))); border: 1px solid color-mix(in srgb, #d4d0f2 50%, var(--surface)); box-shadow: 0 14px 34px -19px #7868b54d; }
+.world .world-overview h2 { font-size: 23px; line-height: 1.45; }
+.world .world-overview h2 strong { color: #3d8c80; }
+.world .world-overview-wave { display: inline-flex; align-items: center; vertical-align: middle; margin-right: 7px; }
+.world .world-overview-eyebrow { font-size: 10px; color: var(--muted); }
+.world .world-overview-description { font-size: 11px; line-height: 1.9; }
+.world .world-floor-number { background: #eee9ff; color: #8b72c2; padding: 3px 7px; border-radius: 7px; }
+.world .world-overview-counts { gap: 7px; }
+.world .world-overview-counts button { padding: 9px 6px; border-radius: 12px; border: 1px solid transparent; }
+.world .world-overview-counts button:nth-child(1) { background: color-mix(in srgb, #d9f5e9 64%, var(--surface)); }
+.world .world-overview-counts button:nth-child(2) { background: color-mix(in srgb, #dceeff 65%, var(--surface)); }
+.world .world-overview-counts button:nth-child(3) { background: color-mix(in srgb, #fff0d8 65%, var(--surface)); }
+.world .world-overview-counts button:hover { transform: translateY(-2px); border-color: #acddcf; }
+.world .world-count-icon { background: transparent; }
+.world .world-overview-counts small { font-size: 9px; }
+.world .world-menu-link-icon { width: 37px; height: 38px; border-radius: 12px; }
+.world .world-menu a { font-size: 13px; gap: 11px; }
+.world .world-menu a:hover .world-menu-link-icon { transform: rotate(-5deg); }
+.world .world-menu-link-icon { transition: transform .18s ease; }
+.world .world-menu { padding: 15px; }
+.world .world-menu-label { font-size: 11px; }
+.world .world-window-head { padding-block: 14px; }
+.world .world-window-head h2 { font-size: 16px; }
+.world .world-window-tool:hover { background: var(--place-soft); color: var(--place-ink); }
+.world .world-team-head { padding-block: 3px; }
+.world .office-person-row { border-radius: 12px; }
+.world .office-person-row:hover { background: color-mix(in srgb, #e8e1ff 40%, var(--surface)); }
+.world .person-portrait { border: 1px solid #fff9; box-shadow: 0 2px 6px #8e79b40b; }
+.world .person-detail-header { padding-top: 12px; background: radial-gradient(ellipse at 50% 15%, #ede7ff70, transparent 72%); border-radius: 15px; }
+.world .person-metrics > div:nth-child(1) { background: color-mix(in srgb, #e3efff 58%, var(--surface)); border-color: #cbdff455; }
+.world .person-metrics > div:nth-child(2) { background: color-mix(in srgb, #e3f7ed 58%, var(--surface)); border-color: #c6e6d955; }
+.world .person-metrics > div:nth-child(3) { background: color-mix(in srgb, #ffe9e5 58%, var(--surface)); border-color: #f2c9c455; }
+.world .person-metrics > div:nth-child(4) { background: color-mix(in srgb, #f2eaff 58%, var(--surface)); border-color: #d8c8ef55; }
+.chat-fab { background: #fff; border: 2px solid #e9defb; box-shadow: 0 6px 22px #8d76c137; }
+.chat-panel { box-shadow: 0 15px 45px #7761a338; border-color: #dacdf1; border-radius: 23px; }
+.chat-panel > header { background: linear-gradient(115deg, color-mix(in srgb, #eee5ff 70%, var(--surface)), color-mix(in srgb, #e6f9f2 65%, var(--surface))); padding: 13px 14px; }
+.chat-panel > header button { display: inline-flex; align-items: center; justify-content: center; min-width: 32px; min-height: 32px; }
+.chat-panel svg, .world svg { flex-shrink: 0; }
+.chat-panel textarea { background: color-mix(in srgb, #f0eaff 30%, var(--surface)); min-height: 68px; }
+.chat-panel summary::marker { content: ''; }
+.chat-panel [role='img'] { display: inline-block; padding: 4px; }
+@media (max-width: 767px) {
+  .world .world-overview h2 { font-size: 20px; }
+  .world .world-overview h2 br { display: none; }
+  .world .world-overview h2 strong { margin-left: 7px; }
+  .world .world-overview-wave svg { width: 25px; height: 25px; }
+  .world .world-overview-counts button { padding: 7px 5px; }
+  .world .world-overview-description { display: none; }
+  .world .world-window-head h2 { font-size: 14px; }
+  .chat-panel { border-radius: 23px 23px 0 0; }
+  .chat-panel textarea { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .world .world-overview-counts button:hover, .world .world-menu a:hover .world-menu-link-icon { transform: none; }
+}
